@@ -1,0 +1,4 @@
+2022-11-18 23:55:29,119 Starting new HTTPS connection (1): api.nobelprize.org:443
+2022-11-18 23:55:29,193 https://api.nobelprize.org:443 "GET /v1/laureate.json HTTP/1.1" 200 None
+2022-11-18 23:55:29,210 Starting new HTTPS connection (1): api.nobelprize.org:443
+2022-11-18 23:55:29,260 https://api.nobelprize.org:443 "GET /v1/country.json HTTP/1.1" 200 None
