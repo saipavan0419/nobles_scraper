@@ -25,27 +25,26 @@ def create_logger():
 
 def download_json(url: str, log_obj: Any):
     """
-    return JSON response
-    Download
+    return Downloaded JSON response
     """
     try:
         resp = requests.get(url, timeout=5)
         json_resp = resp.json()
     except (requests.exceptions.JSONDecodeError) as err:
-        log_obj.debug(f"Error {err} Occurred")
+        logger.debug(f"Error {err} Occurred")
         raise sys.exit()
     else:
         return json_resp
 
-def parse(log_obj: Any):
+def parse(logger: Any):
     """
     Parse laureate file and generate the CSV with required columns like
     id, name, born, unique_catg, unique_year, gender, country_name.
     Country_name will have to be looked up from country json file.
     """
-    laureates_resp = download_json(LAUREATE_URL, log_obj)
+    laureates_resp = download_json(LAUREATE_URL, logger)
     laureates_df = pd.DataFrame(laureates_resp.get("laureates", []))
-    country_resp = download_json(COUNTRY_URL, log_obj)
+    country_resp = download_json(COUNTRY_URL, logger)
     countries_map = {i.get("code"):i.get("name") for i in country_resp["countries"] if i}
     laureates_df['unique_category'] = laureates_df['prizes'].apply(
         lambda x: ";".join(i["category"] for i in x))
@@ -59,5 +58,5 @@ def parse(log_obj: Any):
 
 
 if __name__ == "__main__":
-    log_obj = create_logger()
-    parse(log_obj)
+    logger = create_logger()
+    parse(logger)
